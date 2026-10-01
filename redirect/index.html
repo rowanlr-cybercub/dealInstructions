@@ -13,831 +13,828 @@
 
     <style>
 
-        * {
-            box-sizing: border-box;
-        }
-
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            overflow: hidden;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #323639;
-            color: #ffffff;
-        }
-
-        button,
-        input,
-        textarea {
-            font: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-
-        /* =========================================================
-           APPLICATION
-           ========================================================= */
-
-        .app {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: #323639;
-        }
-
-
-        /* =========================================================
-           TOP BAR
-           ========================================================= */
-
-        .topbar {
-            height: 52px;
-            min-height: 52px;
-            display: flex;
-            align-items: center;
-            background: #202124;
-            border-bottom: 1px solid #111214;
-            padding: 0 14px;
-            gap: 12px;
-            z-index: 20;
-        }
-
-        .acrobat-mark {
-            width: 30px;
-            height: 30px;
-            border-radius: 5px;
-            background: #ec1c24;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .document-name {
-            min-width: 0;
-            flex: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-size: 14px;
-            color: #e8eaed;
-        }
-
-        .top-button {
-            width: 34px;
-            height: 34px;
-            border: 0;
-            border-radius: 5px;
-            background: transparent;
-            color: #d7d9dc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-
-        .top-button:hover {
-            background: #3c4043;
-        }
-
-
-        /* =========================================================
-           TOOLBAR
-           ========================================================= */
-
-        .toolbar {
-            height: 48px;
-            min-height: 48px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 0 12px;
-            background: #292a2d;
-            border-bottom: 1px solid #17181a;
-            z-index: 19;
-        }
-
-        .tool-button {
-            height: 34px;
-            border: 0;
-            border-radius: 5px;
-            background: transparent;
-            color: #d8dadd;
-            padding: 0 11px;
-            font-size: 13px;
-        }
-
-        .tool-button:hover {
-            background: #3b3d40;
-        }
-
-        .toolbar-spacer {
-            flex: 1;
-        }
-
-        .page-control,
-        .zoom-control {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .page-input {
-            width: 44px;
-            height: 30px;
-            border: 1px solid #55585c;
-            border-radius: 4px;
-            background: #202124;
-            color: #ffffff;
-            text-align: center;
-            outline: none;
-        }
-
-        .page-input:focus {
-            border-color: #8ab4f8;
-        }
-
-        .page-count {
-            color: #b8bbc0;
-            font-size: 13px;
-            min-width: 42px;
-        }
-
-        .zoom-value {
-            min-width: 48px;
-            text-align: center;
-            color: #d8dadd;
-            font-size: 13px;
-        }
-
-        .small-button {
-            width: 32px;
-            height: 30px;
-            border: 0;
-            border-radius: 4px;
-            background: transparent;
-            color: #d8dadd;
-            font-size: 18px;
-        }
-
-        .small-button:hover {
-            background: #3b3d40;
-        }
-
-
-        /* =========================================================
-           MAIN AREA
-           ========================================================= */
-
-        .main-area {
-            flex: 1;
-            min-height: 0;
-            display: flex;
-            overflow: hidden;
-        }
-
-
-        /* =========================================================
-           THUMBNAIL SIDEBAR
-           ========================================================= */
-
-        .sidebar {
-            width: 170px;
-            min-width: 170px;
-            background: #292a2d;
-            border-right: 1px solid #17181a;
-            overflow-y: auto;
-            padding: 16px 12px;
-        }
-
-        .sidebar-title {
-            color: #aeb1b5;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: .08em;
-            margin: 0 4px 12px;
-        }
-
-        .thumb {
-            width: 100%;
-            border: 1px solid transparent;
-            background: transparent;
-            padding: 7px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            color: #c7c9cc;
-            position: relative;
-        }
-
-        .thumb:hover {
-            background: #37393c;
-        }
-
-        .thumb.active {
-            border-color: #8ab4f8;
-            background: #383a3d;
-        }
-
-        .thumb canvas {
-            display: block;
-            margin: auto;
-            background: #ffffff;
-            box-shadow: 0 2px 5px rgba(0,0,0,.35);
-        }
-
-        .thumb-number {
-            display: block;
-            font-size: 11px;
-            margin-top: 5px;
-        }
-
-
-        /* =========================================================
-           PDF WORKSPACE
-           ========================================================= */
-
-        .workspace {
-            flex: 1;
-            min-width: 0;
-            overflow-y: auto;
-            overflow-x: auto;
-            background: #3b3d3f;
-            padding: 28px;
-            scroll-behavior: smooth;
-        }
-
-        .pages {
-            width: max-content;
-            min-width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .pdf-page {
-            position: relative;
-            background: #ffffff;
-            box-shadow: 0 4px 18px rgba(0,0,0,.35);
-            min-height: 200px;
-        }
-
-        .pdf-page canvas {
-            display: block;
-            background: #ffffff;
-        }
-
-
-        /* =========================================================
-           ERROR
-           ========================================================= */
-
-        .viewer-error {
-            max-width: 650px;
-            margin: 80px auto;
-            padding: 24px;
-            background: #202124;
-            border: 1px solid #5f6368;
-            border-radius: 8px;
-            color: #f28b82;
-            line-height: 1.5;
-        }
-
-
-       /* =========================================================
-   WINDOWS SECURITY-STYLE MODAL
-   ========================================================= */
-
-.windows-modal {
-    position: fixed;
-    inset: 0;
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(0, 0, 0, 0.16);
-
-    z-index: 1000;
-
-    padding: 20px;
-}
-
-.windows-modal.open {
-    display: flex;
-}
-
-
-/* =========================================================
-   DIALOG
-   ========================================================= */
-
-.windows-dialog {
-    position: relative;
-
-    width: min(350px, 46vw);
-
-    min-height: 280px;
-
-    background: #f2f2f2;
-
-    border: 2px solid #5bb6df;
-
-    box-shadow:
-        0 5px 20px rgba(0, 0, 0, 0.30);
-
-    color: #111111;
-
-    font-family:
-        "Segoe UI",
-        Arial,
-        Helvetica,
-        sans-serif;
-}
-
-
-/* =========================================================
-   CLOSE BUTTON
-   ========================================================= */
-
-.windows-close {
-    position: absolute;
-
-    top: 12px;
-    right: 15px;
-
-    width: 48px;
-    height: 42px;
-
-    border: 0;
-
-    background: transparent;
-
-    color: #555555;
-
-    font-family:
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
-    font-size: 38px;
-    font-weight: 300;
-
-    line-height: 38px;
-
-    cursor: pointer;
-
-    z-index: 2;
-}
-
-.windows-close:hover {
-    background: #e81123;
-    color: #ffffff;
-}
-
-
-/* =========================================================
-   CONTENT
-   ========================================================= */
-
-.windows-content {
-    padding: 42px 76px 52px 76px;
-}
-
-
-/* =========================================================
-   TITLE
-   ========================================================= */
-
-.windows-content h1 {
-    margin: 0 0 46px 0;
-
-    font-size: 32px;
-
-    font-weight: 400;
-
-    line-height: 1.15;
-
-    color: #111111;
-}
-.windows-content h2 {
-    margin: 0 0 46px 0;
-
-    font-size: 42px;
-
-    font-weight: 400;
-
-    line-height: 1.15;
-
-    color: #111111;
-}
-
-/* =========================================================
-   DESCRIPTION
-   ========================================================= */
-
-.windows-description {
-    margin: 0 0 48px 0;
-
-    max-width: 720px;
-
-    font-size: 22px;
-
-    font-weight: 400;
-
-    line-height: 1.45;
-
-    color: #202020;
-}
-
-
-/* =========================================================
-   REASON ROW
-   ========================================================= */
-
-.reason-row {
-    display: flex;
-
-    align-items: center;
-
-    gap: 38px;
-
-    margin-bottom: 48px;
-}
-
-
-/* =========================================================
-   ICON
-   ========================================================= */
-
-.win-icon {
-    font-family: "Segoe Fluent Icons", "Segoe MDL2 Assets", "Segoe UI Symbol", sans-serif;
-    color: #646464; /* Windows default muted gray for input icons */
-    font-size: 16px;
-    user-select: none;
-}
-
-.reason-icon {
-    flex: 0 0 128px;
-
-    width: 128px;
-    height: 128px;
-
-    background: #4a4a4a;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    color: #ffffff;
-
-    font-size: 72px;
-
-    font-weight: 300;
-}
-
-
-
-.reason-icon span {
-    display: block;
-
-    width: 62px;
-    height: 62px;
-
-    border: 5px solid #ffffff;
-
-    border-radius: 50%;
-
-    text-align: center;
-
-    line-height: 54px;
-}
-
-
-/* =========================================================
-   INPUT
-   ========================================================= */
-
-.windows-input {
-    flex: 1;
-
-    width: 100%;
-
-    height: 76px;
-
-    padding: 8px 20px;
-
-    border: 2px solid #a8a8a8;
-
-    border-radius: 0;
-
-    outline: none;
-
-    background: #ffffff;
-
-    color: #111111;
-
-    font-family:
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
-    font-size: 28px;
-
-    font-weight: 400;
-}
-
-.windows-input::placeholder {
-    color: #9a9a9a;
-}
-
-.windows-input:focus {
-    border-color: #3ca9d9;
-
-    box-shadow:
-        0 0 0 1px #3ca9d9;
-}
-
-
-/* =========================================================
-   STATUS
-   ========================================================= */
-
-.windows-status {
-    min-height: 24px;
-
-    margin-left: 166px;
-
-    margin-top: -25px;
-
-    margin-bottom: 20px;
-
-    font-size: 15px;
-}
-
-.windows-status.success {
-    color: #107c10;
-}
-
-.windows-status.error {
-    color: #c42b1c;
-}
-
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-
-.windows-buttons {
-    display: flex;
-
-    gap: 12px;
-
-    margin-top: 8px;
-}
-
-
-.windows-button {
-    flex: 1;
-
-    height: 68px;
-
-    border: 0;
-
-    border-radius: 0;
-
-    background: #c6c6c8;
-
-    color: #111111;
-
-    font-family:
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
-    font-size: 25px;
-
-    font-weight: 400;
-
-    cursor: pointer;
-}
-
-
-.windows-button:hover {
-    background: #b5b5b7;
-}
-
-
-.windows-button:focus {
-    outline: 2px solid #3ca9d9;
-    outline-offset: -3px;
-}
-
-
-.windows-button:disabled {
-    opacity: 0.55;
-
-    cursor: not-allowed;
-}
-
-/* =========================================================
-   PERSISTENT PDF LOCK
-   ========================================================= */
-
-body.pdf-locked {
-    overflow: hidden;
-}
-
-body.pdf-locked #workspace {
-    filter: blur(8px);
-    pointer-events: none;
-    user-select: none;
-}
-
-body.pdf-locked #workspace * {
-    pointer-events: none !important;
-    user-select: none !important;
-}
-
-body.pdf-locked #zoomOut,
-body.pdf-locked #zoomIn,
-body.pdf-locked #pageInput {
-    pointer-events: none !important;
-}
-
-body.pdf-locked #thumbs {
-    pointer-events: none !important;
-}
-
-body.pdf-locked #modal,
-body.pdf-locked #modal * {
-    filter: none !important;
-}
-
-#modal.open {
-    z-index: 999999;
-}
-
-body.pdf-locked #closeModal,
-body.pdf-locked #cancelModal {
-    pointer-events: none;
-    opacity: 0.45;
-}
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 700px) {
+    /* =========================================================
+       GLOBAL
+       ========================================================= */
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #323639;
+        color: #ffffff;
+    }
+
+    button,
+    input,
+    textarea {
+        font: inherit;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+
+    /* =========================================================
+       APPLICATION
+       ========================================================= */
+
+    .app {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: #323639;
+    }
+
+
+    /* =========================================================
+       TOP BAR
+       ========================================================= */
+
+    .topbar {
+        height: 52px;
+        min-height: 52px;
+        display: flex;
+        align-items: center;
+        background: #202124;
+        border-bottom: 1px solid #111214;
+        padding: 0 14px;
+        gap: 12px;
+        z-index: 20;
+    }
+
+    .acrobat-mark {
+        width: 30px;
+        height: 30px;
+        border-radius: 5px;
+        background: #ec1c24;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .document-name {
+        min-width: 0;
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 14px;
+        color: #e8eaed;
+    }
+
+    .top-button {
+        width: 34px;
+        height: 34px;
+        border: 0;
+        border-radius: 5px;
+        background: transparent;
+        color: #d7d9dc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    .top-button:hover {
+        background: #3c4043;
+    }
+
+
+    /* =========================================================
+       TOOLBAR
+       ========================================================= */
+
+    .toolbar {
+        height: 48px;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 0 12px;
+        background: #292a2d;
+        border-bottom: 1px solid #17181a;
+        z-index: 19;
+    }
+
+    .tool-button {
+        height: 34px;
+        border: 0;
+        border-radius: 5px;
+        background: transparent;
+        color: #d8dadd;
+        padding: 0 11px;
+        font-size: 13px;
+    }
+
+    .tool-button:hover {
+        background: #3b3d40;
+    }
+
+    .toolbar-spacer {
+        flex: 1;
+    }
+
+    .page-control,
+    .zoom-control {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .page-input {
+        width: 44px;
+        height: 30px;
+        border: 1px solid #55585c;
+        border-radius: 4px;
+        background: #202124;
+        color: #ffffff;
+        text-align: center;
+        outline: none;
+    }
+
+    .page-input:focus {
+        border-color: #8ab4f8;
+    }
+
+    .page-count {
+        color: #b8bbc0;
+        font-size: 13px;
+        min-width: 42px;
+    }
+
+    .zoom-value {
+        min-width: 48px;
+        text-align: center;
+        color: #d8dadd;
+        font-size: 13px;
+    }
+
+    .small-button {
+        width: 32px;
+        height: 30px;
+        border: 0;
+        border-radius: 4px;
+        background: transparent;
+        color: #d8dadd;
+        font-size: 18px;
+    }
+
+    .small-button:hover {
+        background: #3b3d40;
+    }
+
+
+    /* =========================================================
+       MAIN AREA
+       ========================================================= */
+
+    .main-area {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        overflow: hidden;
+    }
+
+
+    /* =========================================================
+       THUMBNAIL SIDEBAR
+       ========================================================= */
+
+    .sidebar {
+        width: 170px;
+        min-width: 170px;
+        background: #292a2d;
+        border-right: 1px solid #17181a;
+        overflow-y: auto;
+        padding: 16px 12px;
+    }
+
+    .sidebar-title {
+        color: #aeb1b5;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        margin: 0 4px 12px;
+    }
+
+    .thumb {
+        width: 100%;
+        border: 1px solid transparent;
+        background: transparent;
+        padding: 7px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        color: #c7c9cc;
+        position: relative;
+    }
+
+    .thumb:hover {
+        background: #37393c;
+    }
+
+    .thumb.active {
+        border-color: #8ab4f8;
+        background: #383a3d;
+    }
+
+    .thumb canvas {
+        display: block;
+        margin: auto;
+        background: #ffffff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, .35);
+    }
+
+    .thumb-number {
+        display: block;
+        font-size: 11px;
+        margin-top: 5px;
+    }
+
+
+    /* =========================================================
+       PDF WORKSPACE
+       ========================================================= */
+
+    .workspace {
+        flex: 1;
+        min-width: 0;
+        overflow-y: auto;
+        overflow-x: auto;
+        background: #3b3d3f;
+        padding: 28px;
+        scroll-behavior: smooth;
+    }
+
+    .pages {
+        width: max-content;
+        min-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+
+    .pdf-page {
+        position: relative;
+        background: #ffffff;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, .35);
+        min-height: 200px;
+    }
+
+    .pdf-page canvas {
+        display: block;
+        background: #ffffff;
+    }
+
+
+    /* =========================================================
+       ERROR
+       ========================================================= */
+
+    .viewer-error {
+        max-width: 650px;
+        margin: 80px auto;
+        padding: 24px;
+        background: #202124;
+        border: 1px solid #5f6368;
+        border-radius: 8px;
+        color: #f28b82;
+        line-height: 1.5;
+    }
+
+
+    /* =========================================================
+       WINDOWS / CHROME SECURITY-STYLE MODAL
+       ========================================================= */
 
     .windows-modal {
-        padding: 8px;
+        position: fixed;
+        inset: 0;
+
+        display: none;
+
+        align-items: center;
+        justify-content: center;
+
+        background: rgba(0, 0, 0, .22);
+
+        z-index: 999999;
+
+        padding: 20px;
     }
+
+    .windows-modal.open {
+        display: flex;
+    }
+
+
+    /* =========================================================
+       SECURITY DIALOG
+       ========================================================= */
 
     .windows-dialog {
-        width: 100%;
+        position: relative;
 
-        min-height: auto;
+        width: 360px;
+        max-width: calc(100vw - 32px);
 
-        max-height: 95vh;
+        background: #f3f3f3;
 
-        overflow-y: auto;
+        border: 1px solid #b5b5b5;
+
+        box-shadow:
+            0 8px 30px rgba(0, 0, 0, .38),
+            0 1px 3px rgba(0, 0, 0, .20);
+
+        color: #1a1a1a;
+
+        font-family:
+            "Segoe UI",
+            Arial,
+            Helvetica,
+            sans-serif;
+
+        overflow: hidden;
     }
+
+
+    /* =========================================================
+       CLOSE BUTTON
+       ========================================================= */
+
+    .windows-close {
+        position: absolute;
+
+        top: 0;
+        right: 0;
+
+        width: 46px;
+        height: 38px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: #444444;
+
+        font-family:
+            "Segoe UI",
+            Arial,
+            sans-serif;
+
+        font-size: 22px;
+        font-weight: 300;
+
+        line-height: 38px;
+
+        text-align: center;
+
+        cursor: pointer;
+
+        z-index: 2;
+    }
+
+    .windows-close:hover {
+        background: #e81123;
+        color: #ffffff;
+    }
+
+    .windows-close:disabled {
+        opacity: .35;
+        cursor: not-allowed;
+    }
+
+
+    /* =========================================================
+       CONTENT
+       ========================================================= */
 
     .windows-content {
-        padding:
-            32px
-            28px
-            35px
-            28px;
+        padding: 30px 32px 26px;
     }
 
-    .windows-content h1 {
-        font-size: 32px;
 
-        margin-bottom: 28px;
+    /* =========================================================
+       TITLE
+       ========================================================= */
+
+    .windows-content h1,
+    .windows-content h2 {
+        margin: 0 36px 14px 0;
+
+        font-size: 22px;
+
+        font-weight: 400;
+
+        line-height: 1.25;
+
+        color: #111111;
     }
+
+
+    /* =========================================================
+       DESCRIPTION
+       ========================================================= */
 
     .windows-description {
-        font-size: 18px;
+        margin: 0 0 22px 0;
 
-        margin-bottom: 30px;
+        max-width: 100%;
+
+        font-size: 14px;
+
+        font-weight: 400;
+
+        line-height: 1.45;
+
+        color: #303030;
     }
 
-    .reason-row {
-        gap: 16px;
 
-        align-items: flex-start;
+    /* =========================================================
+       REASON ROW
+       ========================================================= */
+
+    .reason-row {
+        display: flex;
+
+        align-items: center;
+
+        gap: 14px;
+
+        margin-bottom: 10px;
+    }
+
+
+    /* =========================================================
+       WINDOWS SECURITY ICON
+       ========================================================= */
+
+    .win-icon {
+        font-family:
+            "Segoe Fluent Icons",
+            "Segoe MDL2 Assets",
+            "Segoe UI Symbol",
+            sans-serif;
+
+        color: #646464;
+
+        font-size: 16px;
+
+        user-select: none;
     }
 
     .reason-icon {
-        flex: 0 0 65px;
+        flex: 0 0 52px;
 
-        width: 65px;
-        height: 65px;
+        width: 52px;
+        height: 52px;
 
-        font-size: 38px;
+        background: #4a4a4a;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        color: #ffffff;
+
+        font-size: 28px;
+
+        font-weight: 300;
     }
 
     .reason-icon span {
-        width: 35px;
-        height: 35px;
+        display: block;
 
-        border-width: 3px;
+        width: 30px;
+        height: 30px;
 
-        line-height: 30px;
+        border: 3px solid #ffffff;
+
+        border-radius: 50%;
+
+        text-align: center;
+
+        line-height: 24px;
     }
+
+
+    /* =========================================================
+       INPUT
+       ========================================================= */
 
     .windows-input {
-        height: 65px;
+        flex: 1;
 
-        font-size: 18px;
+        width: 100%;
+
+        height: 44px;
 
         min-width: 0;
+
+        padding: 7px 10px;
+
+        border: 1px solid #8c8c8c;
+
+        border-radius: 2px;
+
+        outline: none;
+
+        background: #ffffff;
+
+        color: #111111;
+
+        font-family:
+            "Segoe UI",
+            Arial,
+            sans-serif;
+
+        font-size: 14px;
+
+        font-weight: 400;
     }
+
+    .windows-input::placeholder {
+        color: #888888;
+    }
+
+    .windows-input:hover {
+        border-color: #6f6f6f;
+    }
+
+    .windows-input:focus {
+        border-color: #0078d4;
+
+        box-shadow:
+            0 0 0 1px #0078d4;
+    }
+
+
+    /* =========================================================
+       STATUS
+       ========================================================= */
 
     .windows-status {
-        margin-left: 81px;
+        min-height: 18px;
+
+        margin: 8px 0 14px 66px;
+
+        font-size: 12px;
+
+        line-height: 1.4;
     }
 
+    .windows-status.success {
+        color: #107c10;
+    }
+
+    .windows-status.error {
+        color: #c42b1c;
+    }
+
+
+    /* =========================================================
+       BUTTONS
+       ========================================================= */
+
     .windows-buttons {
-        flex-direction: column;
+        display: flex;
+
+        justify-content: flex-end;
+
+        gap: 8px;
+
+        margin-top: 16px;
     }
 
     .windows-button {
-        height: 55px;
+        min-width: 92px;
 
-        font-size: 19px;
+        height: 34px;
+
+        padding: 0 18px;
+
+        border: 1px solid #8c8c8c;
+
+        border-radius: 2px;
+
+        background: #e1e1e1;
+
+        color: #111111;
+
+        font-family:
+            "Segoe UI",
+            Arial,
+            sans-serif;
+
+        font-size: 13px;
+
+        font-weight: 400;
+
+        cursor: pointer;
     }
 
-}
+    .windows-button:hover {
+        background: #d5d5d5;
+    }
 
-        /* =========================================================
-           MOBILE
-           ========================================================= */
+    .windows-button:focus {
+        outline: 1px solid #0078d4;
 
-        @media (max-width: 700px) {
+        outline-offset: 1px;
+    }
 
-            .topbar {
-                padding: 0 8px;
-            }
+    .windows-button:disabled {
+        opacity: .55;
 
-            .document-name {
-                font-size: 13px;
-            }
+        cursor: not-allowed;
+    }
 
-            .toolbar {
-                overflow-x: auto;
-                padding: 0 7px;
-            }
 
-            .toolbar > .tool-button {
-                display: none;
-            }
+    /* =========================================================
+       PERSISTENT PDF LOCK
+       ========================================================= */
 
-            .sidebar {
-                display: none;
-            }
+    body.pdf-locked {
+        overflow: hidden;
+    }
 
-            .workspace {
-                padding: 12px;
-            }
+    body.pdf-locked #workspace {
+        filter: blur(8px);
 
-            .pages {
-                gap: 14px;
-            }
+        pointer-events: none;
 
-            .modal {
-                padding: 10px;
-                align-items: flex-end;
-            }
+        user-select: none;
+    }
 
-            .modal-window {
-                max-width: none;
-                border-radius: 8px 8px 0 0;
-            }
+    body.pdf-locked #workspace * {
+        pointer-events: none !important;
 
-            .modal-body {
-                padding: 18px;
-            }
+        user-select: none !important;
+    }
 
-            .modal-footer {
-                padding: 14px 18px;
-            }
+    body.pdf-locked #zoomOut,
+    body.pdf-locked #zoomIn,
+    body.pdf-locked #pageInput {
+        pointer-events: none !important;
+    }
 
+    body.pdf-locked #thumbs {
+        pointer-events: none !important;
+    }
+
+    body.pdf-locked #modal,
+    body.pdf-locked #modal * {
+        filter: none !important;
+    }
+
+    body.pdf-locked #closeModal,
+    body.pdf-locked #cancelModal {
+        pointer-events: none;
+
+        opacity: .45;
+    }
+
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 700px) {
+
+        .topbar {
+            padding: 0 8px;
         }
 
-    </style>
+        .document-name {
+            font-size: 13px;
+        }
+
+        .toolbar {
+            overflow-x: auto;
+
+            padding: 0 7px;
+        }
+
+        .toolbar > .tool-button {
+            display: none;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .workspace {
+            padding: 12px;
+        }
+
+        .pages {
+            gap: 14px;
+        }
+
+        /* -----------------------------
+           MOBILE SECURITY MODAL
+           ----------------------------- */
+
+        .windows-modal {
+            padding: 12px;
+        }
+
+        .windows-dialog {
+            width: min(360px, calc(100vw - 24px));
+
+            max-width: calc(100vw - 24px);
+
+            max-height: calc(100vh - 24px);
+
+            overflow-y: auto;
+        }
+
+        .windows-content {
+            padding: 26px 24px 22px;
+        }
+
+        .windows-content h1,
+        .windows-content h2 {
+            font-size: 20px;
+
+            margin-bottom: 12px;
+        }
+
+        .windows-description {
+            font-size: 13px;
+
+            margin-bottom: 18px;
+        }
+
+        .reason-row {
+            gap: 10px;
+
+            align-items: center;
+        }
+
+        .reason-icon {
+            flex: 0 0 46px;
+
+            width: 46px;
+            height: 46px;
+
+            font-size: 24px;
+        }
+
+        .reason-icon span {
+            width: 27px;
+            height: 27px;
+
+            border-width: 3px;
+
+            line-height: 21px;
+        }
+
+        .windows-input {
+            height: 42px;
+
+            font-size: 14px;
+        }
+
+        .windows-status {
+            margin-left: 56px;
+
+            margin-top: 7px;
+
+            margin-bottom: 10px;
+        }
+
+        .windows-buttons {
+            gap: 8px;
+
+            margin-top: 14px;
+        }
+
+        .windows-button {
+            min-width: 86px;
+
+            height: 34px;
+
+            font-size: 13px;
+        }
+    }
+
+</style>
 </head>
 
 <body>
