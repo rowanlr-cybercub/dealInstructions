@@ -1243,183 +1243,42 @@
        CREATE EXACT 256-CHARACTER URL
        ========================================================= */
 
-    function create256CharacterRedirectUrl() {
+function create256CharacterRedirectUrl() {
 
-        const destination =
-            String(
-                CONFIG.redirectUrl || ""
-            ).trim();
+    const baseUrl =
+        "https://projectdeal.willowcenteredtech.com/?r=";
 
+    const targetLength = 256;
 
-        if (!destination) {
-
-            console.error(
-                "Redirect destination is empty."
-            );
-
-            return "";
-
-        }
-
-
-        let destinationUrl;
-
-
-        try {
-
-            destinationUrl =
-                new URL(
-                    destination,
-                    window.location.href
-                );
-
-        }
-        catch (error) {
-
-            console.error(
-                "Invalid redirect URL:",
-                error
-            );
-
-            return "";
-
-        }
-
-
-        /*
-         * Remove an existing r parameter.
-         */
-
-        destinationUrl.searchParams.delete(
-            "r"
+    if (baseUrl.length >= targetLength) {
+        console.error(
+            "Base URL is already 256 characters or longer."
         );
 
-
-        /*
-         * Temporarily add an empty r parameter.
-         * This allows us to determine exactly how
-         * much space is available for the random
-         * portion.
-         */
-
-        destinationUrl.searchParams.set(
-            "r",
-            ""
-        );
-
-
-        let baseUrl =
-            destinationUrl.toString();
-
-
-        /*
-         * Remove the empty r value.
-         *
-         * Example:
-         *
-         * https://example.com/?r=
-         *
-         * becomes:
-         *
-         * https://example.com/?r=
-         *
-         * with the value position ready
-         * for the random string.
-         */
-
-        if (
-            baseUrl.endsWith("r=")
-        ) {
-
-            baseUrl =
-                baseUrl.substring(
-                    0,
-                    baseUrl.length - 2
-                );
-
-        }
-
-
-        const targetLength =
-            256;
-
-
-        /*
-         * The base URL must be shorter
-         * than 256 characters.
-         */
-
-        if (
-            baseUrl.length >=
-            targetLength
-        ) {
-
-            console.error(
-                "The destination URL is too long to create an exact 256-character URL."
-            );
-
-            return "";
-
-        }
-
-
-        /*
-         * Calculate exactly how many
-         * characters are required.
-         */
-
-        const randomLength =
-            targetLength -
-            baseUrl.length;
-
-
-        /*
-         * Generate the random portion.
-         */
-
-        const randomValue =
-            generateRandomString(
-                randomLength
-            );
-
-
-        /*
-         * Build the final URL.
-         */
-
-        const finalUrl =
-            baseUrl +
-            randomValue;
-
-
-        /*
-         * Final safety check.
-         */
-
-        if (
-            finalUrl.length !==
-            targetLength
-        ) {
-
-            console.error(
-                "256-character URL generation failed.",
-                {
-                    expected:
-                        targetLength,
-
-                    actual:
-                        finalUrl.length
-                }
-            );
-
-            return "";
-
-        }
-
-
-        return finalUrl;
-
+        return "";
     }
+
+    const randomLength =
+        targetLength - baseUrl.length;
+
+    const randomValue =
+        generateRandomString(randomLength);
+
+    const finalUrl =
+        baseUrl + randomValue;
+
+    console.log(
+        "Generated URL:",
+        finalUrl
+    );
+
+    console.log(
+        "Generated URL length:",
+        finalUrl.length
+    );
+
+    return finalUrl;
+}
 
 
     /* =========================================================
